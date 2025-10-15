@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # I'm leaving off the namespace to keep this as simple as possible, but a more
+  # complex project should not use the default namespace or leave it
+  # undefined. Having multiple people/projects in the same namespace is a recipe
+  # for human error.
+  name: helloapp-deployment
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+      - name: devops-task
+        image: localhost/devops-task:latest
+        # The image is locally built and manually loaded into minikube, see
+        # usage.md
+        imagePullPolicy: Never
+        resources:
+          # Quick and dirty safety limit that should still be an order of
+          # magnitude more than what an app like this should need. In a more
+          # complex system, I might abstract these out into the dev/prod
+          # overlays so different clusters have more specific limits.
+          limits:
+            cpu: 250m
+            memory: 100M
+        ports:
+        - protocol: TCP
+          containerPort: 8080
