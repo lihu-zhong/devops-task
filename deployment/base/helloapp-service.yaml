@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloapp-service
+spec:
+  # I chose to leave the service internal despite having no ingress, because
+  # this is closer to how it would look if I did add one (which I would in any
+  # real project). It's not much harder to run a port forwarding command
+  # compared to digging out the cluster IP, IMO.
+  ports:
+  - protocol: TCP
+    port: 8080
