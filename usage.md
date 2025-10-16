@@ -81,3 +81,20 @@ To tear down the infrastructure:
 ```bash
 kubectl delete -k deployment/prod
 ```
+
+## Accessing the deployed application on GCP
+
+A CI/CD pipeline is set up so that any push to the `dev` or `master` branch is
+immediately tested and deployed to the appropriate environment. These are hosted
+on my personal Free-tier GCP account, so they have very few resources allocated
+to them and are heavily throttled, but for an application that barely does
+anything it should be more than sufficient. Initial access will be slow because
+I don't keep any pods running when they're not in use to reduce cost.
+
+The development instance, synced to the `dev` branch, is at
+https://dev-helloapp-1093269280327.us-east1.run.app
+
+The production instance, synced to the `master` branch, is at
+https://prod-helloapp-1093269280327.us-east1.run.app
+
+They don't have nice names, because Cloud DNS isn't included in GCP's free tier.
