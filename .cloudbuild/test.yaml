@@ -1,0 +1,24 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '--no-cache'
+      - '-t'
+      - >-
+        localhost/test-build:$COMMIT_SHA
+      - .
+      - '-f'
+      - Containerfile
+    id: Build
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - run
+      - '--rm'
+      - >-
+        localhost/test-build:$COMMIT_SHA
+      - bash
+      - test.sh
+    id: Run unittest
+options:
+  substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
